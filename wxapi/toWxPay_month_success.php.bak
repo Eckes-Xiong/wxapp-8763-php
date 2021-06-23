@@ -1,0 +1,33 @@
+
+/* 发送模板消息 */
+$access_token = $c->getAccessToken();
+
+/* 
+订单编号 {{character_string1.DATA}}
+支付时间 {{date2.DATA}}
+商品名称 {{thing3.DATA}}
+支付金额 {{amount4.DATA}}
+订单状态 {{phrase5.DATA}}
+*/
+$c->model->wxSendTemplateMessage(array(
+  "access_token"=>$access_token,
+  "openid"=>$_SESSION["openid"],
+  "tempid"=>"4Y5yAJbw6AmV981huGgmSR3Lg5mxBl5GKwwz0Iqi_JQ",
+  "data"=>array(
+    "character_string1"=>array(
+      "value"=>$json['out_trade_no']
+    ),
+    "date2"=>array(
+      "value"=>date('Y-m-d H:i')
+    ),
+    "thing3"=>array(
+      "value"=>"满月祝福"
+    ),
+    "amount4"=>array(
+      "value"=>$json['amount']
+    ),
+    "phrase5"=>array(
+      "value"=>"已支付"
+    )
+  )
+));
