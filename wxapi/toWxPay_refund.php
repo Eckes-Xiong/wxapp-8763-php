@@ -12,8 +12,10 @@ if($arr__['status']=="PROCESSING"||$arr__['status']=="SUCCESS"){
   $c->model->exec('UPDATE wxapp_order_cart_cache SET status=108 WHERE out_trade_no="'.$json['no'].'"');
   //减积分
   $i = intval($json["amount"]/100)*2;
-  $c->model->exec("UPDATE wxapp_user SET integralNum=integralNum-{$i} WHERE openid='{$_SESSION["openid"]}'");
-  $c->model->writeIntegralLog("-{$i}","退款");
+  if($i>0){
+    $c->model->exec("UPDATE wxapp_user SET integralNum=integralNum-{$i} WHERE openid='{$_SESSION["openid"]}'");
+    $c->model->writeIntegralLog("-{$i}","退款");
+  }
   $c->model->writePayLog("+{$json['amount']}","退款");
   $c->model->getJsonData(1,'退款已提交到微信');
 }else{

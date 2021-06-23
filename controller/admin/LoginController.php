@@ -344,7 +344,7 @@ class LoginController {
             $cache_status = 1;
             $this->model->exec("UPDATE wxapp_order SET out_trade_no='{$osn}' WHERE id in({$json["oids"]})");
         }
-        $this->model->exec("INSERT INTO wxapp_order_cart_cache ( status, openid, out_trade_no, oids, integral, _amount, couponId, address, amount, sid, addrType) VALUES ({$cache_status}, '{$_SESSION['openid']}', '{$osn}', '{$json["oids"]}', '{$json['integral']}', '{$json['_amount']}', '{$json['couponId']}', '{$json['address']}', '{$json['amount']}', '{$json['sid']}', '{$json['addrType']}')");
+        $this->model->exec("INSERT INTO wxapp_order_cart_cache ( status, openid, out_trade_no, oids, integral, _amount, couponId, address, amount, sid, addrType, coupon) VALUES ({$cache_status}, '{$_SESSION['openid']}', '{$osn}', '{$json["oids"]}', '{$json['integral']}', '{$json['_amount']}', '{$json['couponId']}', '{$json['address']}', '{$json['amount']}', '{$json['sid']}', '{$json['addrType']}', '{$json['coupon']}')");
         $this->model->getJsonData(1,'success',$arr__);
     }
     //是否支付成功！
@@ -353,6 +353,51 @@ class LoginController {
         if($count["COUNT(1)"]==0){
             $this->model->getJsonData(0,'支付异常');
             exit;
+        }
+    }
+
+    //查询微信订单 是否支付成功。
+    public function isWxPayOrderSuccess($status=1){
+        $wxapp = $this->model->getsqlOne("SELECT id, amount, _amount, couponId, integral, out_trade_no, oids, sid, addrType  FROM wxapp_order_cart_cache WHERE status={$status} AND openid='{$_SESSION["openid"]}'");
+
+        if($wxapp!=false){
+            // 先查询微信订单
+            $url = 'https://api.mch.weixin.qq.com/pay/orderquery';
+            $data = array();
+            $data['appid'] = $this->appid;
+            $data['mch_id'] = $this->mchid;
+            $data['nonce_str'] = $this->getRanStr();
+            $data['out_trade_no'] = $wxapp['out_trade_no'];//订单编号
+            //$data['sign_type']= 'HMAC-SHA256';
+            $signStr = "appid=".$this->appid."&mch_id=".$this->mchid."&nonce_str=".$data['nonce_str']."&out_trade_no=".$wxapp['out_trade_no']."&key=".$this->apikey;
+            //$data['sign'] = strtoupper(hash_hmac("sha256",$signStr,$this->apikey));
+            $data['sign'] = strtoupper(md5($signStr));
+          
+            //$data = json_encode($data);
+            $data = $this->ToXml($data);
+            
+            $header  = array(
+              'Content-Type:application/json; charset=UTF-8',
+              'Accept:application/json',
+              'User-Agent:'."WXPaySDK/3.0.10 (".PHP_OS.") PHP/".PHP_VERSION." CURL/".$this->mchid
+            );
+            $ret = $this->model->curl_post_https($url,$data,$header);
+            $ret = $this->fromXml($ret);
+          
+            if($ret['trade_state']=='SUCCESS'){
+              if($status==1){
+                  $this->model->AfterWxPay($wxapp);
+              }
+              if($status==2){
+                $this->model->AfterWxPay2();
+              }
+              if($status==3){
+                $this->model->AfterWxPay3();
+              }
+          
+            }else{
+              $this->model->exec("DELETE FROM wxapp_order_cart_cache WHERE id='{$wxapp['id']}'");
+            }
         }
     }
 } 

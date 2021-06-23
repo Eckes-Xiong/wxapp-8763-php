@@ -9,6 +9,8 @@ $c->isWxPaySuccess($json['out_trade_no']);
 //ddzt 到店自提 直接完成，status=102
 $status__ = $json["addrType"]=="ddzt"?"102":"101";
 $c->model->exec("UPDATE wxapp_order_cart_cache SET status='{$status__}' WHERE status=1 AND out_trade_no='{$json['out_trade_no']}'");
+
+$this->model->exec("UPDATE wxapp_order SET status={$status__} WHERE id in({$json["oids"]})");
 //支付成功，更新每日任务，每周任务，常驻任务---------------------------------
 $task = $c->model->refreshDailyTask(true);
 $t_daily = explode(",", $task["daily"]);
@@ -38,7 +40,7 @@ $t_weekly_txt = implode(",",$t_weekly);
 $c->model->updateUserTask("daily='{$t_daily_txt}', weekly='{$t_weekly_txt}', resident='{$t_resident_txt}'");
 
 //添加log，更新积分，更新经验值
-$integral = intval($json["_amount"])*2;
+$integral = intval($json["_amount"]/100)*2;
 $_integral=0;
 $c->model->writeIntegralLog("+{$integral}","购物返积分");
 if($json['integral']){
