@@ -1,6 +1,6 @@
 <?php
 require '../admin_entry.php';
-//$app->checkWxToken(getallheaders());
+//$c->model->checkWxToken(getallheaders());
 $c = new WxDictController('wxapp_store');
 $sql = "SELECT bg,cover,id,level,name,scope,sort,status,statusDesc,subtitle,typeName FROM wxapp_store WHERE status='{$_GET['status']}'";
 if($_GET["plf"]!="release"){

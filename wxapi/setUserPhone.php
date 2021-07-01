@@ -1,8 +1,8 @@
 <?php
 require '../admin_entry.php';
-$app->checkWxToken(getallheaders());
+
 //设置user手机号
-$c = new WxDictController();
+$c = new WxDictController();$c->model->checkWxToken(getallheaders());
 $c->model->exec("UPDATE wxapp_user SET phone=".$_GET["phone"]." WHERE openid = '".$_SESSION["openid"]."'");
 
 //刷新常驻任务

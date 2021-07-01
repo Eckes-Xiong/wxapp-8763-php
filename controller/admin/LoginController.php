@@ -99,8 +99,8 @@ class LoginController {
 		
 		$this->getOpenidAndSessionKey($fields->code);
 		
-		$_SESSION['token'] = md5($fields->code).'.'.md5(date("h:i:sa")."eckes.top.2021");
-		
+        $_SESSION['token'] = md5($fields->code).'.'.md5(date("h:i:sa")."eckes.top.2021");
+
 		$data['token'] = $_SESSION['token'];
 		$result = array(
 			'code' => 1,
@@ -389,10 +389,13 @@ class LoginController {
                   $this->model->AfterWxPay($wxapp);
               }
               if($status==2){
-                $this->model->AfterWxPay2();
+                $this->model->AfterWxPay2($wxapp);
               }
               if($status==3){
-                $this->model->AfterWxPay3();
+                $this->model->AfterWxPay3(array(
+                    "id"=>$wxapp["sid"],
+                    "out_trade_no"=>$wxapp["out_trade_no"]
+                ));
               }
           
             }else{

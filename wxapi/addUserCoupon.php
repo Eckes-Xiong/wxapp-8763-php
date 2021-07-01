@@ -1,6 +1,6 @@
 <?php
 require '../admin_entry.php';
-//$app->checkWxToken(getallheaders());
+//$c->model->checkWxToken(getallheaders());
 //领取优惠券
 $c = new WxDictController();
 if($_GET['id']){

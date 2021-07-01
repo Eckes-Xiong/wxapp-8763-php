@@ -1,8 +1,7 @@
 <?php
 require '../admin_entry.php';
 
-//删除用户积分log
 $c = new WxDictController();$c->model->checkWxToken(getallheaders());
-$sql = "UPDATE wxapp_log_integral SET status=2 WHERE id={$_GET['id']}";
-$c->model->exec($sql);
+$id = $_GET["id"];
+$c->model->exec("UPDATE wxapp_h5game_list SET play=play+1 WHERE id='{$id}'");
 $c->model->getJsonData(1,'success');

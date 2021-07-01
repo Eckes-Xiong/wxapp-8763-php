@@ -1,8 +1,8 @@
 <?php
 require '../admin_entry.php';
-$app->checkWxToken(getallheaders());
+
 //获取全部优惠券
-$c = new LoginController();
+$c = new LoginController();$c->model->checkWxToken(getallheaders());
 $json =json_decode(file_get_contents("php://input"),true);
 
 

@@ -1,9 +1,9 @@
 <?php
 require '../admin_entry.php';
-$app->checkWxToken(getallheaders());
+
 //设置 user 常驻任务
 $json =json_decode(file_get_contents("php://input"),true);
-$c = new WxDictController();
+$c = new WxDictController();$c->model->checkWxToken(getallheaders());
 
 $data = $c->model->getsqlOne('SELECT resident FROM wxapp_task_user where openid="'.$_SESSION["openid"].'"');
 

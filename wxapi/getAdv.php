@@ -1,5 +1,5 @@
 <?php
 require '../admin_entry.php';
-$app->checkWxToken(getallheaders());
-$c = new WxDictController('wxapp_adv');
+
+$c = new WxDictController('wxapp_adv');$c->model->checkWxToken(getallheaders());
 $c->toGetAdv();

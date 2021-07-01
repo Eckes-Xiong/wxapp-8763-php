@@ -1,6 +1,6 @@
 <?php
 require '../admin_entry.php';
-$app->checkWxToken(getallheaders());
+
 //审核店铺
-$c = new WxDictController('wxapp_store');
+$c = new WxDictController('wxapp_store');$c->model->checkWxToken(getallheaders());
 $c->setStore($_GET['status'],$_GET['o']);

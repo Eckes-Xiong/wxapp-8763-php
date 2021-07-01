@@ -110,17 +110,6 @@ class Base {
 			), JSON_UNESCAPED_UNICODE));
 		}
 	}
-	public function checkWxToken($header){
-		if($header["token"]!=$_SESSION['token']){
-			http_response_code(401);
-			exit(json_encode(array(
-				'code' => 401,
-				'message' => '登录验证失败！',
-				'data' => []
-			), JSON_UNESCAPED_UNICODE));
-			exit;
-		}
-	}
     public function jsonEncode($json){
         return json_encode($json);
     }

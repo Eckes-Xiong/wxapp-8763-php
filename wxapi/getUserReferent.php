@@ -1,7 +1,7 @@
 <?php
 require '../admin_entry.php';
-$app->checkWxToken(getallheaders());
-$c = new WxDictController();
+
+$c = new WxDictController();$c->model->checkWxToken(getallheaders());
 // 设置推荐人
 if($_GET["rf"]){
   $id = explode("CVT00",$_GET["rf"])[1];

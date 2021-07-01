@@ -1,8 +1,8 @@
 <?php
 require '../admin_entry.php';
-$app->checkWxToken(getallheaders());
+
 //删除购物车
-$c = new WxDictController();
+$c = new WxDictController();$c->model->checkWxToken(getallheaders());
 if($_GET['id']){
 
   //领取

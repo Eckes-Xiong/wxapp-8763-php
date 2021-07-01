@@ -1,6 +1,6 @@
 <?php
 require '../admin_entry.php';
-//$app->checkWxToken(getallheaders());
+//$c->model->checkWxToken(getallheaders());
 //get one order
 $c = new WxDictController();
 $sql = 'SELECT pid,pname,pcover,pprice,pnumber,createTime,size,orderNum,pcode,endTime,status,remark,isUrgent,id,vipSort FROM wxapp_order ';

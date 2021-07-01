@@ -1,6 +1,6 @@
 <?php
 require '../admin_entry.php';
-//$app->checkWxToken(getallheaders());
+//$c->model->checkWxToken(getallheaders());
 // user 每日分享积分任务
 $json =json_decode(file_get_contents("php://input"),true);
 $c = new WxDictController();

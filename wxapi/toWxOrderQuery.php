@@ -1,8 +1,8 @@
 <?php
 require '../admin_entry.php';
-$app->checkWxToken(getallheaders());
+
 //微信支付 查询订单
-$c = new LoginController();
+$c = new LoginController();$c->model->checkWxToken(getallheaders());
 $json =json_decode(file_get_contents("php://input"),true);
 $osn = date('Ymd') . str_pad(mt_rand(1, 99999), 5, 'c', STR_PAD_LEFT);
 $url = 'https://api.mch.weixin.qq.com/pay/orderquery';

@@ -1,8 +1,8 @@
 <?php
 require '../admin_entry.php';
-$app->checkWxToken(getallheaders());
+
 //加入购物车
-$c = new LoginController();
+$c = new LoginController();$c->model->checkWxToken(getallheaders());
 $json =json_decode(file_get_contents("php://input"),true);
 
 //合并 购物车的产品

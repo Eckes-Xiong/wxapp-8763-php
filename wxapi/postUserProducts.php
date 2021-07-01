@@ -1,6 +1,6 @@
 <?php
 require '../admin_entry.php';
-$app->checkWxToken(getallheaders());
-$c = new WxDictController('wxapp_product_list');
+
+$c = new WxDictController('wxapp_product_list');$c->model->checkWxToken(getallheaders());
 $json =json_decode(file_get_contents("php://input"),true);
 $c->postUserProducts($json);

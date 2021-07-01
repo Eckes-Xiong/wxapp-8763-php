@@ -1,7 +1,7 @@
 <?php
 require '../admin_entry.php';
-$app->checkWxToken(getallheaders());
-$c = new WxDictController();
+
+$c = new WxDictController();$c->model->checkWxToken(getallheaders());
 $json =json_decode(file_get_contents("php://input"),true);
 
 if($json["id"]==""){

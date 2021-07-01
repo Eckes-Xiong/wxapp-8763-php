@@ -1,8 +1,8 @@
 <?php
 require '../admin_entry.php';
-$app->checkWxToken(getallheaders());
+
 //获取用户领取的优惠券
-$c = new WxDictController();
+$c = new WxDictController();$c->model->checkWxToken(getallheaders());
 $sql = 'SELECT id, cid, endTime FROM wxapp_user_coupon WHERE status="'.$_GET['status'].'" AND openid="'.$_SESSION['openid'].'" ORDER BY useTime DESC';
 
 $data = $c->model->getSqlAll($sql);

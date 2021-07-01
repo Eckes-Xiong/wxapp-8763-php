@@ -16,13 +16,12 @@ class WxDictController {
         //$sql2 = 'SELECT cover,bg,name,level,subtitle,type FROM wxapp_store WHERE status=1 ORDER BY sort DESC LIMIT 0,5';
         //$data2 = $this->model->getSqlAll($sql2);
         //首页商品列表
-        //童装
-        $sql3 = 'SELECT id,cover,name,subtitle,price,discount,typedesc FROM wxapp_product_list WHERE vipSort<100 and typecode like "%201022" ORDER BY vipSort DESC LIMIT 0,8';
-        $data3 = $this->model->getSqlAll($sql3);
-        //女鞋
-        $sql4 = 'SELECT id,cover,name,subtitle,price,discount,typedesc FROM wxapp_product_list WHERE vipSort<100 and typecode like "%201001" ORDER BY vipSort DESC LIMIT 0,8';
+        //
+        $sql4 = 'SELECT id,cover,name,subtitle,price,discount,typedesc FROM wxapp_product_list WHERE vipSort<100 and typecode like "%201003" ORDER BY vipSort DESC LIMIT 0,8';
         $data4 = $this->model->getSqlAll($sql4);
-
+        //
+        $sql3 = 'SELECT id,cover,name,subtitle,price,discount,typedesc FROM wxapp_product_list WHERE vipSort<100 and typecode like "%201026" ORDER BY vipSort DESC LIMIT 0,8';
+        $data3 = $this->model->getSqlAll($sql3);
         $result = array(
             'code' => 1,
             'message' => "success",
@@ -31,12 +30,12 @@ class WxDictController {
                 //'store' => $data2,
                 'goods' => array(
                     array(
-                        'name' => "碳酸饮料",
-                        'list' => $data3,
+                        'name' => "坚果蜜饯",
+                        'list' => $data4,
                     ),
                     array(
-                        'name' => "休闲零食",
-                        'list' => $data4,
+                        'name' => "苏打水",
+                        'list' => $data3,
                     )
                 )
             )

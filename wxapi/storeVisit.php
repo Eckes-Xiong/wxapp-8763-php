@@ -1,6 +1,6 @@
 <?php
 require '../admin_entry.php';
-//$app->checkWxToken(getallheaders());
+//$c->model->checkWxToken(getallheaders());
 //获取店铺商品列表
 $c = new WxDictController();
 

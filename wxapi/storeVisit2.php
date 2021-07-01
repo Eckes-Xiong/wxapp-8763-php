@@ -1,6 +1,6 @@
 <?php
 require '../admin_entry.php';
-//$app->checkWxToken(getallheaders());
+//$c->model->checkWxToken(getallheaders());
 //点击二级分类
 $c = new WxDictController();
 $s = $c->model->getSqlOne('SELECT openid FROM wxapp_store WHERE id='.$_GET['sid']);

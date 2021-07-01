@@ -1,8 +1,8 @@
 <?php
 require '../admin_entry.php';
-$app->checkWxToken(getallheaders());
+
 //获取用户的小程序码
-$c = new LoginController();
+$c = new LoginController();$c->model->checkWxToken(getallheaders());
 $access_token = $c->getAccessToken();
 
 $url = 'https://api.weixin.qq.com/wxa/getwxacode?access_token='.$access_token;

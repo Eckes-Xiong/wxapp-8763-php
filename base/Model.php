@@ -224,4 +224,19 @@ class Model {
         $header  = array();
         $this->curl_post_https($sql_s,$data,$header);
     }   
+    
+	public function checkWxToken($header){
+		if($header["token"]!=$_SESSION['token']){
+			http_response_code(401);
+			exit(json_encode(array(
+				'code' => 401,
+				'message' => '登录验证失败！',
+				'data' => array(
+                    "header"=> $header["token"],
+                    "session"=> $_SESSION
+                )
+			), JSON_UNESCAPED_UNICODE));
+			exit;
+		}
+	}
 } 

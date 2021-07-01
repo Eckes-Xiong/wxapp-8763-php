@@ -1,8 +1,8 @@
 <?php
 require '../admin_entry.php';
-$app->checkWxToken(getallheaders());
+
 //获取全部成就
-$c = new WxDictController();
+$c = new WxDictController();$c->model->checkWxToken(getallheaders());
 $sql = 'SELECT id,title,subtitle,integral FROM wxapp_achieve ORDER BY sort DESC';
 
 $data = $c->model->getSqlAll($sql);

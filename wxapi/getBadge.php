@@ -1,8 +1,8 @@
 <?php
 require '../admin_entry.php';
-$app->checkWxToken(getallheaders());
+
 //获取全部徽章
-$c = new WxDictController();
+$c = new WxDictController();$c->model->checkWxToken(getallheaders());
 $sql = 'SELECT * FROM wxapp_badge';
 
 $data = $c->model->getSqlAll($sql);

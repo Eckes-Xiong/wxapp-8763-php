@@ -1,8 +1,8 @@
 <?php
 require '../admin_entry.php';
-$app->checkWxToken(getallheaders());
+
 //获取用户的购物车
-$c = new LoginController();
+$c = new LoginController();$c->model->checkWxToken(getallheaders());
 $c->isWxPayOrderSuccess();
 $integral = $c->model->getSqlOne("SELECT integralNum FROM wxapp_user WHERE openid='{$_SESSION["openid"]}'");
 
